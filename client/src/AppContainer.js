@@ -1,16 +1,22 @@
 import App from './App'
 import './App.css'
 import { connect } from 'react-redux'
-import {loadFunds, loadFundsSize} from "./actions/actions";
+import {loadFunds, loadFundsSize, loadInvestments, loadDistributions} from "./actions/actions";
 
 function mapDispatchToProps(dispatch) {
   return {
     loadFunds: function () {
       dispatch(loadFunds())
         },
-      loadFundsSize: function () {
+    loadFundsSize: function () {
       dispatch(loadFundsSize())
-        }
+        },
+    loadInvestments: function () {
+      dispatch(loadInvestments())
+        },
+    loadDistributions: function () {
+      dispatch(loadDistributions())
+            }
     }
 }
 

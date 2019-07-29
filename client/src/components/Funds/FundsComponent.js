@@ -1,7 +1,6 @@
 import React from "react";
 
 function Funds(props) {
-  console.log(props)
   return (
     <div>
     <p className="App-intro">{props.funds.map((row,index) => (

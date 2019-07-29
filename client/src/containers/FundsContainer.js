@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
-import Funds from "../components/FundsComponent";
+import Funds from "../components/Funds/FundsComponent";
+import FundsCard from '../components/Funds/FundsList'
 
 function mapStateToProps(state) {
   return {
@@ -7,4 +8,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Funds);
+const mapState= connect(mapStateToProps)
+export const FundsResult = mapState(Funds)
+export const FundsCardResult = mapState(FundsCard)

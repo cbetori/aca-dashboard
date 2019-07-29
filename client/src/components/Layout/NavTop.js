@@ -29,7 +29,7 @@ export default class NavTop extends React.Component {
             style={{position: "fixed", right: 0}}
             title={
               <span className="submenu-title-wrapper">
-                <Icon type="setting" />
+                <Icon type="user" />
                 User
               </span>
             }

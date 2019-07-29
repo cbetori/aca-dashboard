@@ -1,6 +1,6 @@
 let express = require('express')
 let router = express.Router()
-const db = require('../queries')
+const db = require('../../queries')
 
 router.get('/funds-size', (request, result, next) => {
     db.query('SELECT "tblIDB_Funds"."Fund_ID", Sum("tblIDB_Investments"."Gross_Capital") AS Sum_of_Gross_Capital '+

@@ -14,8 +14,22 @@ function fundsSize(state = [], action) {
   return state;
 }
 
+function investments(state =[], action){
+  if (action.type === 'INVESTMENTS_LOADED'){
+    return action.value
+  }
+  return state
+}
+
+function distributions(state =[], action){
+  if (action.type === 'DISTRIBUTIONS_LOADED'){
+    return action.value
+  }
+  return state
+}
+
 
 const rootReducer = combineReducers({
-    funds, fundsSize
+    funds, fundsSize, investments, distributions
   });
   export default rootReducer;

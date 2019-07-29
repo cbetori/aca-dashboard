@@ -1,4 +1,6 @@
 export default {
     funds: [],
-    fundsSize: []
+    fundsSize: [],
+    investments: [],
+    distributions: []
 }
