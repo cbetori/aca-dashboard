@@ -4,14 +4,16 @@ import { PieChart, Pie, Cell, Legend } from "recharts"
 //Proivde $ comparison between funds
 function FundsPieChart(props) {
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
-  console.log(props.fundsSize)
   return (
-    <PieChart width={500} height={500} >
-        <Pie data={props.fundsSize} dataKey="sum_of_gross_capital" nameKey="Fund_ID" label legendType="square"  fill="#000">
-          {props.fundsSize.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)}
-        </Pie>
-        <Legend/>
-    </PieChart >
+    <div>
+      <h3>Active Funds Size</h3>
+      <PieChart width={500} height={500} >
+          <Pie data={props.fundsSize} dataKey="sum_of_gross_capital" nameKey="Fund_ID" label legendType="square"  fill="#000">
+            {props.fundsSize.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)}
+          </Pie>
+          <Legend/>
+      </PieChart >
+    </div>
   );
 }
 export default FundsPieChart;

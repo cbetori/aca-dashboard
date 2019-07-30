@@ -1,3 +1,8 @@
 .navside{
   max-width: 200 
 }
+
+.container{
+  display: inline-flex;
+  margin: 50px
+}

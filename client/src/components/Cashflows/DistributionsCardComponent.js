@@ -2,7 +2,6 @@ import React from "react";
 import { Statistic, Card, Col, Icon } from 'antd'
 
 function DistributionsCard(props) {
-    console.log(props)
     let distroTotal = props.distributions.reduce((a, b)=>a + b.CF_Amount,0)
   return (
     <React.Fragment>
