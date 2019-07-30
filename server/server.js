@@ -36,6 +36,6 @@ app.use((req, res, next) => {
 //Deploy routes
 app.use(fundsRoute, fundsSizeRoute,investmentsRoute, distributionsRoute)
 
-app.listen(port, ()=>{
+app.listen(process.env.PORT || 3001, ()=>{
     console.log('App running on '+port)
 })
