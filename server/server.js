@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const port = process.env.PORT || 3001
+const path = require('path')
 
 //Routes
 const fundsRoute = require('./routes/funds/funds-route')
@@ -17,7 +18,6 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname,'/../client/build')));
 
   // Express serve up index.html file if it doesn't recognize route
-  const path = require('path');
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname + '/../client/build/index.html'));
   });
