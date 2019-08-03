@@ -28,8 +28,15 @@ function distributions(state =[], action){
   return state
 }
 
+function investors(state =[], action){
+  if (action.type === 'INVESTORS_LOADED'){
+    return action.value
+  }
+  return state
+}
+
 
 const rootReducer = combineReducers({
-    funds, fundsSize, investments, distributions
+    funds, fundsSize, investments, distributions, investors
   });
   export default rootReducer;

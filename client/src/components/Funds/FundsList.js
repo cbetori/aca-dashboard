@@ -1,8 +1,7 @@
 import React from "react";
-import { List, Typography} from 'antd'
+import { List } from 'antd'
 
 function FundsCard(props) {
-    console.log(props)
     const distinct = (value, index, self)=>{
         return self.indexOf(value) === index
     }
@@ -15,6 +14,7 @@ function FundsCard(props) {
         header={<div>Fund List</div>}
         bordered
         dataSource={fundsList}
+        style={{minWidth: 550, marginLeft: 200}}
         renderItem={item => (
             <List.Item>
             {/* <Typography.Text mark>[ITEM]</Typography.Text>*/} {item} 

@@ -1,12 +1,12 @@
 import React from "react";
-import { Row, Col } from 'antd'
+import { Row } from 'antd'
 import InvestmentsContainer from '../../containers/InvestmentsContainer'
 import { DistroCardsContainer } from '../../containers/DistributionContainer'
 
 function Cards(){
     return(
-        <div style={{ background: '#ECECEC', padding: '50px' }}>
-        <Row gutter={16}>
+        <div style={{ background: '#ECECEC', padding: '25px' }}>
+        <Row gutter={15}>
             <InvestmentsContainer/>
             <DistroCardsContainer/>
         </Row>

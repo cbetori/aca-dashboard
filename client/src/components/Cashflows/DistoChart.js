@@ -18,7 +18,7 @@ function DistroChart(props) {
             let gross_distro = 0
             let tax_distro = 0
             let comp_distro = 0
-            for (let i=0; i < props.distributions.length>0; i++){
+            for (let i=0; i < props.distributions.length; i++){
                 if(datesList[x] === moment(props.distributions[i].CF_Date).format('MM/YY')){
                     switch(props.distributions[i].Code_Name){
                         case "Special Distribution":
@@ -40,8 +40,8 @@ function DistroChart(props) {
                 tempArray.push({
                     Spec_Distro:spec_distro, 
                     Gross_Distro:gross_distro, 
-                    Tax_Distro:tax_distro, 
                     Comp_Distro:comp_distro, 
+                    Tax_Distro:tax_distro, 
                     CF_Date:datesList[x]
                 })
         }
@@ -49,36 +49,36 @@ function DistroChart(props) {
     }
 
   return (
-        <div>
+        <div className='autoMargin'>
             <h3>Distribution History</h3>
             <AreaChart width={1050} height={450} data={createNewCashflowObject()}
             margin={{ top: 10, right: 50, left: 0, bottom: 0 }}>
             <defs>
                 <linearGradient id="colorSD" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
-                <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
+                <stop offset="100%" stopColor="#0088FE" stopOpacity={0.8}/>
+                <stop offset="75%" stopColor="#0088FE" stopOpacity={0}/>
                 </linearGradient>
                 <linearGradient id="colorGD" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8}/>
-                <stop offset="95%" stopColor="#82ca9d" stopOpacity={0}/>
+                <stop offset="100%" stopColor="#00C49F" stopOpacity={0.8}/>
+                <stop offset="75%" stopColor="#00C49F" stopOpacity={0}/>
                 </linearGradient>
                 <linearGradient id="colorTD" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#8dd1e1" stopOpacity={0.8}/>
-                <stop offset="95%" stopColor="#8dd1e1" stopOpacity={0}/>
+                <stop offset="100%" stopColor="#FF8042" stopOpacity={0.8}/>
+                <stop offset="75%" stopColor="#FF8042" stopOpacity={0}/>
                 </linearGradient>
                 <linearGradient id="colorCD" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#a4de6b" stopOpacity={0.8}/>
-                <stop offset="95%" stopColor="#a4de6b" stopOpacity={0}/>
+                <stop offset="100%" stopColor="#FFBB28" stopOpacity={0.8}/>
+                <stop offset="75%" stopColor="#FFBB28" stopOpacity={0}/>
                 </linearGradient>
             </defs>
             <XAxis dataKey="CF_Date" />
             <YAxis dataKey="Spec_Distro"/>
             <CartesianGrid strokeDasharray="3 3" />
             <Tooltip />
-            <Area type="monotone" dataKey="Spec_Distro" stroke="#8884d8" fillOpacity={1} fill="url(#colorSD)" />
-            <Area type="monotone" dataKey="Gross_Distro" stroke="#82ca9d" fillOpacity={1} fill="url(#colorGD)" />
-            <Area type="monotone" dataKey="Tax_Distro" stroke="#8dd1e1" fillOpacity={1} fill="url(#colorTD)" />
-            <Area type="monotone" dataKey="Comp_Distro" stroke="#a4de6b" fillOpacity={1} fill="url(#colorCD)" />
+            <Area type="monotone" dataKey="Spec_Distro" stroke="#0088FE" fillOpacity={1} fill="url(#colorSD)" />
+            <Area type="monotone" dataKey="Gross_Distro" stroke="#0088FE" fillOpacity={1} fill="url(#colorGD)" />
+            <Area type="monotone" dataKey="Comp_Distro" stroke="#FFBB28" fillOpacity={1} fill="url(#colorCD)" />
+            <Area type="monotone" dataKey="Tax_Distro" stroke="#FF8042" fillOpacity={1} fill="url(#colorTD)" />
             </AreaChart>
         </div>
   );

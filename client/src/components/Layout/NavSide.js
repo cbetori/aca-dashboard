@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 import { Layout, Menu, Icon } from 'antd'
 
 const { Sider } = Layout;
@@ -12,7 +13,6 @@ export default class NavSide extends React.Component {
   };
 
   onCollapse = collapsed => {
-    console.log(collapsed);
     this.setState({ collapsed });
     if (this.state.navWidth === 200){
       this.setState({navWidth: 80})
@@ -28,9 +28,11 @@ export default class NavSide extends React.Component {
         <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
           <div className="logo" />
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-            <Menu.Item key="1">
+            <Menu.Item className='navlink' key="1">
               <Icon type="pie-chart" />
-              <span>Home</span>
+              <span>
+                <Link className='navlink' to='/'> Home </Link>
+              </span>
             </Menu.Item>
             <Menu.Item key="2">
               <Icon type="desktop" />
@@ -41,7 +43,9 @@ export default class NavSide extends React.Component {
               title={
                 <span>
                   <Icon type="user" />
-                  <span>Investors</span>
+                
+                    <Link className='navlink' to='/investors'> Investors </Link>
+             
                 </span>
               }
             >

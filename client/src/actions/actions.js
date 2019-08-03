@@ -2,7 +2,6 @@ export function loadFunds() {
     return function (dispatch) {
       fetch("http://localhost:3001/funds")
       .then( (response) => {
-        console.log(response)
         return response.json();
       }).then((res) => {
         dispatch(fundsLoaded(res));
@@ -63,6 +62,23 @@ export function loadDistributions() {
 function distributionsLoaded(res) {
   return {
     type: "DISTRIBUTIONS_LOADED",
+    value: res
+  };
+}
+
+export function loadInvestors() {
+  return function (dispatch) {
+    fetch("http://localhost:3001/investors")
+    .then( (response) => {
+      return response.json();
+    }).then((res) => {
+      dispatch(investorsLoaded(res));
+    });
+  };
+}
+function investorsLoaded(res) {
+  return {
+    type: "INVESTORS_LOADED",
     value: res
   };
 }

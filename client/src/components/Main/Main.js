@@ -1,9 +1,9 @@
 import React from "react";
-import { Layout, Statistic, Card, Row, Col, Icon  } from 'antd'
+import { Layout } from 'antd'
 import Cards from './Cards'
 import FundsSizeContainer from '../../containers/FundsSizeContainer'
 import {FundsCardResult} from '../../containers/FundsContainer'
-import { DistroChartContainer } from '../../containers/DistributionContainer'
+import { DistroChartContainer, DistroPieChartContainer } from '../../containers/DistributionContainer'
 
 //const { Content } = Layout;
 
@@ -12,11 +12,16 @@ function Main(props) {
   return (
     <Layout>
       <Cards/>
+      <h1 className='mainContainer'>Distribution Information</h1>
+      <div className='container'>
+        <DistroPieChartContainer/>
+        <DistroChartContainer className='spacer'/>
+      </div>
+      <h1 className='mainContainer'>Fund Information</h1>
       <div className='container'>
         <FundsSizeContainer/>
-        <DistroChartContainer/>
+        <FundsCardResult/>
       </div>
-      <FundsCardResult/>
     </Layout>
   );
 }

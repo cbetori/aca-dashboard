@@ -1,16 +1,16 @@
 import React from "react";
-import { Statistic, Card, Col, Icon } from 'antd'
+import { Statistic, Card, Col } from 'antd'
 
 function DistributionsCard(props) {
     let distroTotal = props.distributions.reduce((a, b)=>a + b.CF_Amount,0)
   return (
     <React.Fragment>
-        <Col span={5}>
+        <Col span={4}>
             <Card>
                 <Statistic
                 title="Total Distributions Paid"
                 precision={0}
-                valueStyle={{ color: '#3f8600' }}
+                valueStyle={{ color: '#05386b', fontWeight: 'bold' }}
                 prefix="$"
                 suffix=""
                 value={distroTotal}

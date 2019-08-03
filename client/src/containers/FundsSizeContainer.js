@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import FundsPieChart from "../components/Funds/FundsSizeComponent";
+import FundsPieChart from "../components/Funds/FundsPieChart";
 
 function mapStateToProps(state) {
   return {
