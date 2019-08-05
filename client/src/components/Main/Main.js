@@ -3,7 +3,7 @@ import { Layout } from 'antd'
 import Cards from './Cards'
 import FundsSizeContainer from '../../containers/FundsSizeContainer'
 import {FundsCardResult} from '../../containers/FundsContainer'
-import { DistroChartContainer, DistroPieChartContainer } from '../../containers/DistributionContainer'
+import { DistroChartContainer, DistroFunnelContainer } from '../../containers/DistributionContainer'
 
 //const { Content } = Layout;
 
@@ -14,8 +14,8 @@ function Main(props) {
       <Cards/>
       <h1 className='mainContainer'>Distribution Information</h1>
       <div className='container'>
-        <DistroPieChartContainer/>
-        <DistroChartContainer className='spacer'/>
+        <DistroFunnelContainer/>
+        <DistroChartContainer/>
       </div>
       <h1 className='mainContainer'>Fund Information</h1>
       <div className='container'>

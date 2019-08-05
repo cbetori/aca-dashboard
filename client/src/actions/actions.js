@@ -82,3 +82,22 @@ function investorsLoaded(res) {
     value: res
   };
 }
+
+export function loadInvestorsInvID() {
+  let url = window.location.href
+  var urlsplit = url.split("/").slice(-1)[0];
+  return function (dispatch) {
+    fetch("http://localhost:3001/investors/invid/"+urlsplit)
+    .then( (response) => {
+      return response.json();
+    }).then((res) => {
+      dispatch(investorsLoadedInvID(res));
+    });
+  };
+}
+function investorsLoadedInvID(res) {
+  return {
+    type: "INVESTORS_INVID_LOADED",
+    value: res
+  };
+}

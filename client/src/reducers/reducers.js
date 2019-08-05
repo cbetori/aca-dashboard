@@ -35,8 +35,16 @@ function investors(state =[], action){
   return state
 }
 
+function investorsInvID(state =[], action){
+  if (action.type === 'INVESTORS_INVID_LOADED'){
+    return action.value
+  }
+  return state
+}
+
+
 
 const rootReducer = combineReducers({
-    funds, fundsSize, investments, distributions, investors
+    funds, fundsSize, investments, distributions, investors, investorsInvID
   });
   export default rootReducer;

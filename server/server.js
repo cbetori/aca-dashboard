@@ -8,6 +8,7 @@ const path = require('path')
 const fundsRoute = require('./routes/funds/funds-route')
 const fundsSizeRoute = require('./routes/funds/fundsSize-route')
 const investorsRoute = require('./routes/investors/investors-route')
+const invIDRoute = require('./routes/investors/invid-route')
 const investmentsRoute = require('./routes/investments/investments-route')
 const distributionsRoute = require('./routes/cashflows/distributions')
 
@@ -35,7 +36,7 @@ app.use((req, res, next) => {
 });
 
 //Deploy routes
-app.use(fundsRoute, fundsSizeRoute,investmentsRoute, distributionsRoute, investorsRoute)
+app.use(fundsRoute, fundsSizeRoute,investmentsRoute, distributionsRoute, investorsRoute, invIDRoute)
 
 app.listen(process.env.PORT || 3001, ()=>{
     console.log('App running on '+port)

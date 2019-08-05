@@ -1,10 +1,9 @@
 import React from "react";
-import PieChartDash from '../Reusable/PieChart'
 import FunnelChartDash from '../Reusable/FunnelChart'
 
 //Proivde $ comparison between different distribution types
 
-function DistroPieChart(props) {
+function DistroFunnelChart(props) {
     let data = () =>{
         let spec_distro = 0
         let gross_distro = 0
@@ -40,4 +39,4 @@ function DistroPieChart(props) {
     </React.Fragment>
   )
 }
-export default DistroPieChart;
+export default DistroFunnelChart;

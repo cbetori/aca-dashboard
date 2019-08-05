@@ -3,5 +3,6 @@ export default {
     fundsSize: [],
     investments: [],
     distributions: [],
-    investors: []
+    investors: [],
+    investorsInvID: []
 }

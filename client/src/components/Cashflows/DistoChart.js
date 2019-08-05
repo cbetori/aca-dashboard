@@ -9,7 +9,6 @@ function DistroChart(props) {
     }
     let distoDatesArray = props.distributions.map((row)=> moment(row.CF_Date).format('MM/YY'))
     let datesList = distoDatesArray.filter(distinct)
-
     function createNewCashflowObject(){
         let tempArray = []
         datesList = datesList.sort()
