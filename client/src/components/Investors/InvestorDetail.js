@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts'
+import React from "react";
+import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
 import { Card, Table } from 'antd'
 import moment from 'moment'
 import numeral from 'numeral'
@@ -41,10 +41,20 @@ function InvestorDetail (props) {
         //Create cashflow total card
         let cashTotals = []
         let barChartData = []
+        let barChartColors =[]
+        let count = 0
+        const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042',  '#FF8042', '#FF8042', '#FF8042', '#FF8042', '#FF8042'];
         for(let element in cashFlowTotals){
-            barChartData.push({distrotype: element, amount: cashFlowTotals[element]})
+
+            if(cashFlowTotals[element] > 0 ){
+                barChartData.push({distrotype: element, amount: cashFlowTotals[element]})
+                barChartData[count][element] = cashFlowTotals[element]
+                barChartColors.push(<Bar barSize barGa0p={0}  dataKey={element} fill={COLORS[count]}/>)
+                   count += 1
+            }
             cashFlowTotals[element] = numeral(cashFlowTotals[element]).format('$0,0')
             cashTotals.push(<p>{element}:  {cashFlowTotals[element]}</p>)
+         
         }
         let columns = [
             {title: 'InvID', dataIndex:'InvID',  key: 'InvID', width: '5%'},
@@ -53,7 +63,8 @@ function InvestorDetail (props) {
             {title: 'CF_Amount', dataIndex:'CF_Amount', key: 'CF_Amount', width: '10%'},
             {title: 'CF_Date', dataIndex:'CF_Date',  key: 'CF_Date', width: '10%'},
         ]
-        const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+
+        console.log(barChartData)
         return(
             <React.Fragment>
                 <div style={{display: 'flex', background: '#ECECEC', padding: '30px' }}>
@@ -73,17 +84,18 @@ function InvestorDetail (props) {
                     </Card>
                     <BarChart
                         width={900}
-                        height={300}
+                        height={500}
                         data={barChartData}
                         margin={{
-                        top: 5, right: 30, left: 20, bottom: 5,
+                        top: 25, right: 30, left: 20, bottom: 5,
                         }}
                     > {cashTotals.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)}
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="distrotype" />
                         <YAxis dataKey="amount"/>
                         <Tooltip />
-                        <Bar dataKey="amount" fill="#8884d8" />
+                        {barChartColors}
+                 
                     </BarChart>
                 </div>
                 <div >
