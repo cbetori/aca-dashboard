@@ -11,6 +11,7 @@ const investorsRoute = require('./routes/investors/investors-route')
 const invIDRoute = require('./routes/investors/invid-route')
 const investmentsRoute = require('./routes/investments/investments-route')
 const distributionsRoute = require('./routes/cashflows/distributions')
+//const distributionsDetailRoute = require('./routes/cashflows/detailedistro')
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))

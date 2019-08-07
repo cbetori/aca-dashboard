@@ -34,10 +34,6 @@ export default class NavSide extends React.Component {
                 <Link className='navlink' to='/'> Home </Link>
               </span>
             </Menu.Item>
-            <Menu.Item key="2">
-              <Icon type="desktop" />
-              <span>Cashflows</span>
-            </Menu.Item>
             <SubMenu
               key="sub1"
               title={
@@ -65,9 +61,9 @@ export default class NavSide extends React.Component {
               <Menu.Item key="6">Pipeline</Menu.Item>
               <Menu.Item key="8">Performance</Menu.Item>
             </SubMenu>
-            <Menu.Item key="9">
-              <Icon type="file" />
-              <span>Settings</span>
+            <Menu.Item key="2">
+              <Icon type="desktop" />
+              <span>Cashflows</span>
             </Menu.Item>
           </Menu>
         </Sider>

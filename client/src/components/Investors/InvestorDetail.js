@@ -1,75 +1,107 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
 import { Card, Input, Modal, Table, Button } from 'antd'
+import { shallowEqual, useSelector} from 'react-redux'
 import TableSelect from '../Reusable/TableSelect'
 import moment from 'moment'
 import numeral from 'numeral'
 
+
 function InvestorDetail (props) {
+//Props State
+    const propsHolder = useSelector( props => props)
+    const propsDetails = useSelector(props => props.investorsInvID.map(res =>res.details))
+    const propsCash = useSelector(props =>props.investorsInvID.map(res => res.cashflows))
 
-        //Add account details to its own object
-        let dataDetails = props.investorsInvID.map(res => res.details[0])
-        let details = {}
-        for (let element in dataDetails[0]){
-            details[element] = dataDetails[0][element]
+//Other State
+    const [tableData, tableDataSet] = useState([])
+    const [barChartData,barChartDataSet] = useState([])
+    const [barChartColumns,barChartColumnsSet] = useState([])
+    const [cardDataCash, cardDataCashSet] = useState([])
+    const [cardDataDetail, cardDataDetailSet] = useState([])
+
+    function getCardDataDetail(){
+        let tempObject = {}
+        for(let element in propsDetails[0]){
+            tempObject = propsDetails[element][0]
         }
-        //Create an object to store cashflow totals. Create clean array of tableData
-        let dataCash = props.investorsInvID.map(res => res.cashflows)
-        let tableData = []
-        let initialBarChartData = []
-        let cashFlowTotals = {
-            'Gross Distribution': 0, 
-            'Special Distribution':0,
-            'Composite Tax Distro':0, 
-            'Tax Distribution':0,
-            'Tax Holdback':0, 
-            'GP Promote':0, 
-            'Management Fee':0, 
-            'Servicing Fee':0, 
-            'Commission':0, 
+        cardDataDetailSet(tempObject)
+    }
+
+    function getCardDataCash(){
+        let tempArray = []
+        let cash = getCashFlowTotals()
+        for(let element in cash){
+            cash[element] = numeral(cash[element]).format('$0,0')
+            tempArray.push(<p key={element}>{element}:  {cash[element]}</p>)
         }
+        cardDataCashSet(tempArray)
+    }
 
-        let columns = [
-            {title: 'Edit', dataIndex:'Edit',  key: 'Edit', width: '10%'},
-            {title: 'InvID', dataIndex:'InvID',  key: 'InvID', width: '15%'},
-            {title: 'CID', dataIndex:'CID', key: 'CID', width: '15%'},
-            {title: 'Code_Name', dataIndex:'Code_Name',  key: 'Code_Name', width: '20%'},
-            {title: 'CF_Amount', dataIndex:'CF_Amount', key: 'CF_Amount', width: '20%'},
-            {title: 'CF_Date', dataIndex:'CF_Date',  key: 'CF_Date', width: '20%'},
-        ]
-
-        dataCash.forEach(array => {
+    function getCashFlowTotals(){
+        const tempObject ={
+            'Gross Distribution': 0, 'Special Distribution':0,'Composite Tax Distro':0, 'Tax Distribution':0,
+            'Tax Holdback':0, 'GP Promote':0, 'Management Fee':0, 'Servicing Fee':0, 'Commission':0, 
+        }
+        propsCash.forEach(array => {
             array.forEach((row, index)=>{
                 try{
-                    // console.log(row)
-                    cashFlowTotals[row.Code_Name] += row.CF_Amount
-                    row.CF_Date = moment(row.CF_Date).format('MM/DD/YYYY')
-                    row.CF_Amount = numeral(row.CF_Amount).format('$0,0')
-                    row.Edit= (<Button type="primary" key={index} onClick={showModal}>Edit</Button>)
-                    tableData.push(row)
+                    tempObject[row.Code_Name] += row.CF_Amount
                 }catch(err){}
             })
-        });
-        
-        //Create cashflow total card. Create array to hold barchart data. Create array to hold <Bar> tags.  
-        let cashTotalsCard = []
-        let barChartData = []
-        let barChartColors =[]
-        let count = 0
+        })
+        return tempObject
+    }
+
+    let columns = [
+        {title: 'Edit', dataIndex:'Edit',  key: 'Edit', width: '10%'},
+        {title: 'InvID', dataIndex:'InvID',  key: 'InvID', width: '15%'},
+        {title: 'CID', dataIndex:'CID', key: 'CID', width: '15%'},
+        {title: 'Code_Name', dataIndex:'Code_Name',  key: 'Code_Name', width: '20%'},
+        {title: 'CF_Amount', dataIndex:'CF_Amount', key: 'CF_Amount', width: '20%'},
+        {title: 'CF_Date', dataIndex:'CF_Date',  key: 'CF_Date', width: '20%'},
+    ]   
+    function getTableData(){
+        let tempArray = []
+        const cashArray = JSON.parse(JSON.stringify(propsCash))
+        cashArray.forEach(array => {
+            array.forEach((row, index)=>{
+                row.CF_Date = moment(row.CF_Date).format('MM/DD/YYYY')
+                row.CF_Amount = numeral(row.CF_Amount).format('$0,0')
+                row.Edit= (<Button type="primary" key={index} onClick={showModal}>Edit</Button>)
+                tempArray.push(row)
+            })
+        })
+        tableDataSet(tempArray)
+    }
+
+    function getBarChartData(){
+         //Create cashflow total card. Create array to hold barchart data. Create array to hold <Bar> tags.  
         const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042',  '#FF8042', '#FF8042', '#FF8042', '#FF8042', '#FF8042'];
-        for(let element in cashFlowTotals){
-     
-            if(cashFlowTotals[element] > 0 ){
-                console.log(element)
-                barChartData.push({distrotype: element, amount: cashFlowTotals[element]})
-                barChartData[count][element] = cashFlowTotals[element]
-                barChartColors.push(<Bar key={element} dataKey={element} fill={COLORS[count]}/>)
-                   count += 1
+        let tempArrayData = []
+        let tempArrayColumns =[]
+        let count = 0
+        let cash = getCashFlowTotals()
+        for(let element in cash){
+            if(cash[element] > 0 ){
+                tempArrayData.push({distrotype: element, amount: cash[element]})
+                tempArrayData[count][element] = cash[element]
+                tempArrayColumns.push(<Bar key={element} dataKey={element} fill={COLORS[count]}/>)
+                    count += 1
             }
-            cashFlowTotals[element] = numeral(cashFlowTotals[element]).format('$0,0')
-            cashTotalsCard.push(<p key={element}>{element}:  {cashFlowTotals[element]}</p>)
-    
         }
+        barChartColumnsSet(tempArrayColumns)
+        barChartDataSet(tempArrayData)
+    }
+ 
+    useEffect(()=>{
+        getCashFlowTotals()
+        getTableData()
+        getBarChartData()
+        getCardDataCash()
+        getCardDataDetail()
+        console.log('x')
+    },[propsHolder]) 
 
     //Modal
         const [visible, setVisible]= useState(false)
@@ -90,27 +122,23 @@ function InvestorDetail (props) {
         function handleCancel () {
             setVisible(false)
           };
-    //Form
-        function fillForm(){
-
-        }
 
         return(
             <div style={{background: '#ECECEC'}}>
                 <div style={{display: 'flex',padding: '30px' }}>
-                    <Card title={details.Account_Name} bordered={false} style={{ width: 300, margin:25 }}>
-                        <p>InvId:           {details.InvID}</p>
-                        <p>CID:             {details.CID}</p>
-                        <p>Feeder:          {details.Feeder}</p>
-                        <p>Inv Type:        {details.Inv_Type}</p>
-                        <p>Gross Capital:   {numeral(details.Gross_Capital).format('$0,0')}</p>
-                        <p>Net Capital:     {numeral(details.Net_Capital).format('$0,0')}</p>
-                        <p>Start Date:      {moment(details.Date_Inv).format('MM/DD/YYYY')}</p>
-                        <p>End Date:        {moment(details.Date_Eliminate).format('MM/DD/YYYY')}</p>
+                    <Card title={cardDataDetail.Account_Name} bordered={false} style={{ width: 300, margin:25 }}>
+                        <p>InvId:           {cardDataDetail.InvID}</p>
+                        <p>CID:             {cardDataDetail.CID}</p>
+                        <p>Feeder:          {cardDataDetail.Feeder}</p>
+                        <p>Inv Type:        {cardDataDetail.Inv_Type}</p>
+                        <p>Gross Capital:   {numeral(cardDataDetail.Gross_Capital).format('$0,0')}</p>
+                        <p>Net Capital:     {numeral(cardDataDetail.Net_Capital).format('$0,0')}</p>
+                        <p>Start Date:      {moment(cardDataDetail.Date_Inv).format('MM/DD/YYYY')}</p>
+                        <p>End Date:        {moment(cardDataDetail.Date_Eliminate).format('MM/DD/YYYY')}</p>
                     </Card>
                     <br/>
                     <Card title='Cashflows' bordered={false} style={{ width: 300, margin:25 }}>
-                        {cashTotalsCard}
+                        {cardDataCash}
                     </Card>
                     <BarChart
                         width={900}
@@ -119,12 +147,12 @@ function InvestorDetail (props) {
                         margin={{
                         top: 25, right: 30, left: 20, bottom: 5,
                         }}
-                    > {cashTotalsCard.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)}
+                    >
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="distrotype" />
                         <YAxis dataKey="amount"/>
                         <Tooltip />
-                        {barChartColors}
+                        {barChartColumns}
                     </BarChart>
                 </div>
                 <Modal
