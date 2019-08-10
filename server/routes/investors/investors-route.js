@@ -15,7 +15,7 @@ router.get('/investors', (request, result, next) => {
       if (err) {
         return next(err)
       }
-      result.send(JSON.stringify(res.rows))
+      result.send(res.rows)
     })
   })
 

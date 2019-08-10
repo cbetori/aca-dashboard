@@ -25,7 +25,7 @@ router.get('/investors/invid/:InvID', (request, result, next) => {
         return next(err)
       }
       let invObj = [{details: res.rows, cashflows: res2.rows}]
-      result.send(JSON.stringify(invObj))
+      result.send(invObj)
     })
   })
 })

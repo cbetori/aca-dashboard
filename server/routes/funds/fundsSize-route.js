@@ -9,7 +9,7 @@ router.get('/funds-size', (request, result, next) => {
       if (err) {
         return next(err)
       }
-      result.send(JSON.stringify(res.rows))
+      result.send(res.rows)
     })
   })
   
