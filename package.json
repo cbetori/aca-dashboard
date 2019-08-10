@@ -8,7 +8,8 @@
     "server": "nodemon ./bin/www",
     "client": "cd client/src && npm start ",
     "start-dev": "concurrently - kill-others \"npm run server \" \"npm run client \" ",
-    "start": "node server.js"
+    "start": "node server.js",
+    "heroku-postbuild": "npm install && cd client && npm install --only-dev && npm install && npm run build"
   },
   "author": "collin betori",
   "license": "ISC",
