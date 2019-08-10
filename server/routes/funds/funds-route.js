@@ -11,4 +11,4 @@ router.get('/api/funds', (request, result, next) => {
     })
   })
 
-  module.exports = router
+module.exports = router

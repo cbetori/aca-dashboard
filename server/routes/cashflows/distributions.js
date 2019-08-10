@@ -13,7 +13,7 @@ router.get('/api/cashflows/distributions', (request, result, next) => {
         return next(err)
       }
 
-      result.send(JSON.stringify(res.rows))
+      result.send(res.rows)
     })
   })
 
