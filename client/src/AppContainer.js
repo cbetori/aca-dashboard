@@ -1,7 +1,7 @@
 import App from './App'
 import './App.css'
 import { connect } from 'react-redux'
-import {loadFunds, loadFundsSize, loadInvestments, loadDistributions,loadInvestors, loadInvestorsInvID} from "./actions/actions";
+import {loadFunds, loadFundsSize, loadInvestments, loadDistributions,loadInvestors, loadInvestorsInvID, updateInvestorCashFlow} from "./actions/actions";
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -22,6 +22,9 @@ function mapDispatchToProps(dispatch) {
     },
     loadInvestorsInvID: function () {
       dispatch(loadInvestorsInvID())
+    },
+    updateInvestorCashFlow:function(result){
+      dispatch(updateInvestorCashFlow(result))
     }
 
   }

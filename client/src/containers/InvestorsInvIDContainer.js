@@ -3,8 +3,9 @@ import InvestorDetail from "../components/Investors/InvestorDetail";
 
 function mapStateToProps(state) {
   return {
-    investorsInvID: state.investorsInvID
+    investorsInvID: state.investorsInvID,
+    updateInvestorCashFlow: state.updateInvestorCashFlow
   };
 }
 
-export const InvestorDetailResult = connect(mapStateToProps)(InvestorDetail);
+export const InvestorDetailResult = connect(mapStateToProps)(InvestorDetail)

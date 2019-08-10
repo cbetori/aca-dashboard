@@ -8,7 +8,6 @@ import { DistroChartContainer, DistroFunnelContainer } from '../../containers/Di
 //const { Content } = Layout;
 
 function Main(props) {
-  console.log(props)
   return (
     <Layout>
       <Cards/>

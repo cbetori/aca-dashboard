@@ -23,6 +23,7 @@ class App extends Component {
     this.props.loadInvestments();
     this.props.loadDistributions();
     this.props.loadInvestorsInvID();
+    // this.props.updateInvestorCashFlow();
   }
 
   componentWillUnmount() {
@@ -40,6 +41,7 @@ class App extends Component {
                 <Route path="/funds" component={FundsCardResult} />
                 <Route path="/investors" exact component={InvestorsTableResults} />
                 <Route path="/investors/invid/:id" component={InvestorDetailResult} />
+                <Route path="/cashflows" component={Main} />
               </Content>
             </Switch>
           </div>

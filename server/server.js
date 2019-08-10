@@ -11,6 +11,7 @@ const investorsRoute = require('./routes/investors/investors-route')
 const invIDRoute = require('./routes/investors/invid-route')
 const investmentsRoute = require('./routes/investments/investments-route')
 const distributionsRoute = require('./routes/cashflows/distributions')
+const updateCF = require('./routes/cashflows/updateCF')
 //const distributionsDetailRoute = require('./routes/cashflows/detailedistro')
 
 app.use(bodyParser.json())
@@ -33,11 +34,12 @@ if (process.env.NODE_ENV === 'production') {
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
     next();
 });
 
 //Deploy routes
-app.use(fundsRoute, fundsSizeRoute,investmentsRoute, distributionsRoute, investorsRoute, invIDRoute)
+app.use(fundsRoute, fundsSizeRoute,investmentsRoute, distributionsRoute, investorsRoute, invIDRoute, updateCF)
 
 app.listen(process.env.PORT || 3001, ()=>{
     console.log('App running on '+port)

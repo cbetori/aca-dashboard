@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from "react";
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
-import { Card, Input, Modal, Table, Button } from 'antd'
-import { shallowEqual, useSelector} from 'react-redux'
-import TableSelect from '../Reusable/TableSelect'
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
+import { Card, Input, Modal, Table, Button, Form, FormGroup } from 'antd'
+import { useSelector } from 'react-redux'
+//import TableSelect from '../Reusable/TableSelect'
 import moment from 'moment'
 import numeral from 'numeral'
+import { updateInvestorCashFlow }  from '../../actions/actions'
 
 
 function InvestorDetail (props) {
@@ -20,6 +21,9 @@ function InvestorDetail (props) {
     const [cardDataCash, cardDataCashSet] = useState([])
     const [cardDataDetail, cardDataDetailSet] = useState([])
 
+    const [newModalValue, newModalValueSet] = useState({})
+    const [oldModalValues, oldModalValuesSet] = useState({})
+
     function getCardDataDetail(){
         let tempObject = {}
         for(let element in propsDetails[0]){
@@ -32,7 +36,7 @@ function InvestorDetail (props) {
         let tempArray = []
         let cash = getCashFlowTotals()
         for(let element in cash){
-            cash[element] = numeral(cash[element]).format('$0,0')
+            cash[element] = numeral(cash[element]).format('0,0')
             tempArray.push(<p key={element}>{element}:  {cash[element]}</p>)
         }
         cardDataCashSet(tempArray)
@@ -57,9 +61,9 @@ function InvestorDetail (props) {
         {title: 'Edit', dataIndex:'Edit',  key: 'Edit', width: '10%'},
         {title: 'InvID', dataIndex:'InvID',  key: 'InvID', width: '15%'},
         {title: 'CID', dataIndex:'CID', key: 'CID', width: '15%'},
-        {title: 'Code_Name', dataIndex:'Code_Name',  key: 'Code_Name', width: '20%'},
-        {title: 'CF_Amount', dataIndex:'CF_Amount', key: 'CF_Amount', width: '20%'},
-        {title: 'CF_Date', dataIndex:'CF_Date',  key: 'CF_Date', width: '20%'},
+        {title: 'Type', dataIndex:'Code_Name',  key: 'Code_Name', width: '20%'},
+        {title: 'Amount', dataIndex:'CF_Amount', key: 'CF_Amount', width: '20%'},
+        {title: 'Date', dataIndex:'CF_Date',  key: 'CF_Date', width: '20%'},
     ]   
     function getTableData(){
         let tempArray = []
@@ -67,8 +71,8 @@ function InvestorDetail (props) {
         cashArray.forEach(array => {
             array.forEach((row, index)=>{
                 row.CF_Date = moment(row.CF_Date).format('MM/DD/YYYY')
-                row.CF_Amount = numeral(row.CF_Amount).format('$0,0')
-                row.Edit= (<Button type="primary" key={index} onClick={showModal}>Edit</Button>)
+                row.CF_Amount = numeral(row.CF_Amount).format('0,0')
+                row.Edit= (<Button type="primary" key={index} onClick={()=>showModal(row)}>Edit</Button>)
                 tempArray.push(row)
             })
         })
@@ -100,30 +104,47 @@ function InvestorDetail (props) {
         getBarChartData()
         getCardDataCash()
         getCardDataDetail()
-        console.log('x')
     },[propsHolder]) 
 
     //Modal
         const [visible, setVisible]= useState(false)
         const [confirmLoading, setConfirmLoading]= useState(false)
         
-        function showModal(){
+        function showModal(row){
+            let rowClone = {...row}
+            rowClone.CF_Amount = parseFloat(rowClone.CF_Amount)
+            oldModalValuesSet(rowClone)
+            newModalValueSet(rowClone)
             setVisible(true)
         };
 
         function handleOk () {
             setConfirmLoading(false)
             setTimeout(() => {
+                // updateInvestorCashFlow(oldModalValues, newModalValue)
                 setVisible(false)
                 setConfirmLoading(false)
-            }, 2000);
+            }, 500);
         };
 
         function handleCancel () {
             setVisible(false)
           };
 
+        function updateModalValues(value){
+            console.log(value)
+            let key = Object.keys(value)
+            let clone = JSON.parse(JSON.stringify(newModalValue))
+            clone[key]  = value[0]
+            // for (let e in newModalValue){
+            //     // cleanInfo[Ob]
+            //     if(Object.keys(value)=== e){
+                    
+            //     }
+            }
+
         return(
+           
             <div style={{background: '#ECECEC'}}>
                 <div style={{display: 'flex',padding: '30px' }}>
                     <Card title={cardDataDetail.Account_Name} bordered={false} style={{ width: 300, margin:25 }}>
@@ -131,8 +152,8 @@ function InvestorDetail (props) {
                         <p>CID:             {cardDataDetail.CID}</p>
                         <p>Feeder:          {cardDataDetail.Feeder}</p>
                         <p>Inv Type:        {cardDataDetail.Inv_Type}</p>
-                        <p>Gross Capital:   {numeral(cardDataDetail.Gross_Capital).format('$0,0')}</p>
-                        <p>Net Capital:     {numeral(cardDataDetail.Net_Capital).format('$0,0')}</p>
+                        <p>Gross Capital:   {numeral(cardDataDetail.Gross_Capital).format('0,0')}</p>
+                        <p>Net Capital:     {numeral(cardDataDetail.Net_Capital).format('0,0')}</p>
                         <p>Start Date:      {moment(cardDataDetail.Date_Inv).format('MM/DD/YYYY')}</p>
                         <p>End Date:        {moment(cardDataDetail.Date_Eliminate).format('MM/DD/YYYY')}</p>
                     </Card>
@@ -156,18 +177,30 @@ function InvestorDetail (props) {
                     </BarChart>
                 </div>
                 <Modal
-                    title="Title"
+                    title="Edit Cash Flows"
                     visible={visible}
                     onOk={handleOk}
                     confirmLoading={confirmLoading}
-                    onCancel={handleCancel}
-                >
-
+                    onCancel={handleCancel}>
+                        <div style={{display: 'inline-flex'}}>
+                        <Input onChange={(e)=>  updateModalValues({InvID: e.target.value})} id="InvID" addonBefore='InvID' defaultValue={oldModalValues.InvID}/>
+                        <Input style={{margin: 5}} addonBefore='CID' defaultValue={oldModalValues.CID}/>
+                        </div>
+                        <Input style={{margin: 5}} addonBefore='Type' defaultValue={oldModalValues.Code_Name}/>
+                        <Input style={{margin: 5}} addonBefore='Date' defaultValue={oldModalValues.CF_Date}/>
+                        <Input  style={{margin: 5}} addonBefore='Amount' defaultValue={oldModalValues.CF_Amount}/>
+                        <Button type="submit"  >Submit</Button>
                 </Modal>
                     <Table style={{marginRight: 75, background: '#f1f3f5'}} columns= {columns} dataSource={tableData} />
-                    {/* <Table onClick={showModal} style={{marginRight: 75, background: '#f1f3f5'}} columns= {columns} dataSource={tableData} /> */}
             </div>
         )
 }
 
 export default InvestorDetail
+
+{/* <Input  onChange={(e)=>  updateModalValues({InvID: e.target.value})}  id="InvID" addonBefore='InvID' defaultValue={oldModalValues.InvID}/>
+<Input style={{margin: 5}} addonBefore='CID' defaultValue={oldModalValues.CID}/>
+</div>
+<Input style={{margin: 5}} addonBefore='Type' defaultValue={oldModalValues.Code_Name}/>
+<Input style={{margin: 5}} addonBefore='Date' defaultValue={oldModalValues.CF_Date}/>
+<Input onChange={(e)=>  updateModalValues({CF_Amount: e.target.value})} style={{margin: 5}} addonBefore='Amount' defaultValue={oldModalValues.CF_Amount}/> */}

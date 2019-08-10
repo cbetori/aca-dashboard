@@ -4,5 +4,6 @@ export default {
     investments: [],
     distributions: [],
     investors: [],
-    investorsInvID: []
+    investorsInvID: [],
+    updateInvestorCashFlow: []
 }
