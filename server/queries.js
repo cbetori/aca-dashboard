@@ -6,8 +6,6 @@ const client = new Client({
   ssl: true
 })
 
-
-
 module.exports = {
     query: (text, params, callback) => {
       return client.query(text, params, callback)
