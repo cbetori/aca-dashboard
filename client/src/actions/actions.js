@@ -1,6 +1,6 @@
 export function loadFunds() {
     return function (dispatch) {
-      fetch("./funds")
+      fetch("/funds")
       .then( (response) => {
         return response.json();
       }).then((res) => {
@@ -17,7 +17,7 @@ export function loadFunds() {
 
 export function loadFundsSize() {
   return function (dispatch) {
-    fetch("./funds-size")
+    fetch("/funds-size")
     .then( (response) => {
       return response.json();
     }).then((res) => {
@@ -34,7 +34,7 @@ function fundsSizeLoaded(res) {
 
 export function loadInvestments() {
   return function (dispatch) {
-    fetch("./investments")
+    fetch("/investments")
     .then( (response) => {
       return response.json();
     }).then((res) => {
@@ -51,7 +51,7 @@ function investmentsLoaded(res) {
 
 export function loadDistributions() {
   return function (dispatch) {
-    fetch("./cashflows/distributions")
+    fetch("/cashflows/distributions")
     .then( (response) => {
       return response.json();
     }).then((res) => {
@@ -68,7 +68,7 @@ function distributionsLoaded(res) {
 
 export function loadInvestors() {
   return function (dispatch) {
-    fetch("./investors")
+    fetch("/investors")
     .then( (response) => {
       return response.json();
     }).then((res) => {
@@ -87,7 +87,7 @@ export function loadInvestorsInvID() {
   let url = window.location.href
   var urlsplit = url.split("/").slice(-1)[0];
   return function (dispatch) {
-    fetch("./investors/invid/"+urlsplit)
+    fetch("/investors/invid/"+urlsplit)
     .then( (response) => {
       return response.json();
     }).then((res) => {
@@ -108,7 +108,7 @@ export function updateInvestorCashFlow(oldValue, newValue, row) {
   let url = window.location.href
   var urlsplit = url.split("/").slice(-1)[0];
   // return function (dispatch) {
-    fetch("./investors/invid/"+urlsplit+"/cf", {
+    fetch("/investors/invid/"+urlsplit+"/cf", {
       method: "PUT",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({row})
