@@ -2,7 +2,7 @@ let express = require('express')
 let router = express.Router()
 const db = require('../../queries')
 
-router.get('/investments', (request, result, next) => {
+router.get('/api/investments', (request, result, next) => {
     db.query('SELECT * FROM "tblIDB_Investments"', null , (err, res) => {
       if (err) {
         return next(err)

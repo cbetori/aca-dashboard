@@ -2,7 +2,7 @@ let express = require('express')
 let router = express.Router()
 const db = require('../../queries')
 
-router.get('/investors', (request, result, next) => {
+router.get('/api/investors', (request, result, next) => {
     const query = 
     'SELECT "tblIDB_Investments"."InvID", "tblIDB_Investments"."VID", "tblIDB_Investments"."CID", "tblIDB_Investors"."SID", '+
     '"tblIDB_Investments"."Feeder", "tblIDB_Investments"."Inv_Type" ,  "tblIDB_Investments"."Date_Inv",'+
