@@ -14,7 +14,8 @@ const updateCF = require('./server/routes/cashflows/updateCF')
 //const distributionsDetailRoute = require('./routes/cashflows/detailedistro')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
-
+ 
+app.use(fundsRoute, fundsSizeRoute,investmentsRoute, distributionsRoute, investorsRoute, invIDRoute, updateCF)
 if (process.env.NODE_ENV === 'production') {
   // Exprees will serve up production assets
   app.use(express.static(path.join(__dirname,'./client/build')));
@@ -34,8 +35,16 @@ app.use((req, res, next) => {
     next();
 });
 
+router.get('/api/funds', (request, result, next) => {
+  db.query('SELECT * FROM "tblIDB_Funds"', null , (err, res) => {
+    if (err) {
+      return next(err)
+    }
+    result.send(res.rows)
+  })
+})
 //Deploy routes
-app.use(fundsRoute, fundsSizeRoute,investmentsRoute, distributionsRoute, investorsRoute, invIDRoute, updateCF)
+
 
 app.listen(process.env.PORT || 3001, ()=>{
     console.log('App running on '+port)
