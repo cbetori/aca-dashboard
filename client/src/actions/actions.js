@@ -1,15 +1,26 @@
 import axios from 'axios'
 
 export function loadFunds() {
-    return function (dispatch) {
-      fetch("/api/funds")
-      .then( (response) => {
-        return response.json();
-      }).then((res) => {
-        dispatch(fundsLoaded(res));
-      });
-    };
+  return function (dispatch) {
+    axios.get("/api/funds")
+    .then(function (response) {
+      dispatch(fundsLoaded(response.data));
+      console.log(response);
+    })
   }
+}
+  
+
+// export function loadFunds() {
+//     return function (dispatch) {
+//       fetch("/api/funds")
+//       .then( (response) => {
+//         return response.json();
+//       }).then((res) => {
+//         dispatch(fundsLoaded(res));
+//       });
+//     };
+//   }
   function fundsLoaded(res) {
     return {
       type: "FUNDS_LOADED",
