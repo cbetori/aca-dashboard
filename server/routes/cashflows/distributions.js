@@ -12,7 +12,8 @@ router.get('/cashflows/distributions', (request, result, next) => {
       if (err) {
         return next(err)
       }
-      result.send(res.rows)
+
+      result.send(JSON.stringify(res.rows))
     })
   })
 
