@@ -25,7 +25,7 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.join(__dirname + './client/build/index.html'));
   });
 }else{
-    app.use(express.static('./client/build'))
+    app.use(express.static('./client/public'))
 }
 
 app.use((req, res, next) => {
@@ -35,14 +35,6 @@ app.use((req, res, next) => {
     next();
 });
 
-router.get('/api/funds', (request, result, next) => {
-  db.query('SELECT * FROM "tblIDB_Funds"', null , (err, res) => {
-    if (err) {
-      return next(err)
-    }
-    result.send(res.rows)
-  })
-})
 //Deploy routes
 
 
