@@ -9,6 +9,7 @@ export function loadFunds() {
     };
   }
   function fundsLoaded(res) {
+    console.log("test")
     return {
       type: "FUNDS_LOADED",
       value: res
