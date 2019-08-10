@@ -13,17 +13,16 @@ const investmentsRoute = require('./routes/investments/investments-route')
 const distributionsRoute = require('./routes/cashflows/distributions')
 const updateCF = require('./routes/cashflows/updateCF')
 //const distributionsDetailRoute = require('./routes/cashflows/detailedistro')
-
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
 if (process.env.NODE_ENV === 'production') {
   // Exprees will serve up production assets
-  app.use(express.static(path.join(__dirname,'../client/build')));
+  app.use(express.static(path.join(__dirname,'/../client/build')));
 
   // Express serve up index.html file if it doesn't recognize route
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname + '../client/build/index.html'));
+    res.sendFile(path.join(__dirname + '/../client/build/index.html'));
   });
 }else{
     app.use(express.static('../client/public'))
