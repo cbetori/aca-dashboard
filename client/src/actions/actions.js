@@ -39,7 +39,7 @@ export function loadInvestments() {
       return response.json();
     }).then((res) => {
       dispatch(investmentsLoaded(res));
-    });
+    }).catch((error)=>console.log(error.message))
   };
 }
 function investmentsLoaded(res) {

@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon ./bin/www",
     "client": "cd client/src && npm start ",
-    "start": "concurrently - kill-others \"npm run server \" \"npm run client \" ",
+    "start-dev": "concurrently - kill-others \"npm run server \" \"npm run client \" ",
+    "start": "node server/server.js",
     "heroku-postbuild": "npm install && cd client && npm install --only-dev && npm install && npm run build"
   },
   "author": "collin betori",
