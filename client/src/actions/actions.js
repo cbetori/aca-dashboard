@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 export function loadFunds() {
     return function (dispatch) {
       fetch("/api/funds")
